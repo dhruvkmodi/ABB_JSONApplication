@@ -351,5 +351,7 @@ https://www.w3schools.com/html/default.asp
 https://www.w3schools.com/jsref/met_win_settimeout.asp
 https://stackoverflow.com/questions/17883692/how-to-set-time-delay-in-javascript
 https://positive-stud.medium.com/how-to-make-your-public-repository-as-private-and-vice-versa-in-github-39bd2dbfe0ff
+https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility
+https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 */
 
