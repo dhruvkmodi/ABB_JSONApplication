@@ -14,7 +14,7 @@
 
 ### Visual Studio Code
 ---
-1. Download VSC
+1. Download VSC from https://code.visualstudio.com/
 2. Open VSC
 
 ### Git/Github
