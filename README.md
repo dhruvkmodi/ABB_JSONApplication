@@ -24,7 +24,7 @@
 
 Once the configuration are completed, please follow this steps
 
-##Steps to start the application
+## Steps to start the application
 1. Stat the terminal at VSC
 2. Go to this website and do the intial setup for Git/Github https://adamtheautomator.com/visual-studio-code-github-setup/
 3. Pull the applicaiton repository from the applicaiton Github, put this command into the terminal (
