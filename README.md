@@ -30,5 +30,5 @@ Once the configuration are completed, please follow this steps
 3. Pull the applicaiton repository from the applicaiton Github, put this command into the terminal **pull https://github.com/dhruvkmodi/ABB_JSONApplication.git**
 4. Check if node is installed by the command **node -v**
 5. To start the application put this command **node index.js**
-6. The application should be running on https://localhost:5000
+6. The application should be running on localhost:5000
 
