@@ -12,7 +12,10 @@ server.get('/', (req, res) =>
     res.sendFile(__dirname + '/index.html');
 })
 
-server.listen(5000)
+server.listen(5000, () => 
+{
+    console.log("Application is running at http://localhost:5000/");
+})
 
 server.post('/', (req, res) => 
 {
@@ -321,5 +324,6 @@ https://positive-stud.medium.com/how-to-make-your-public-repository-as-private-a
 https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility
 https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 https://stackoverflow.com/questions/1947263/using-an-html-button-to-call-a-javascript-function
+https://expressjs.com/en/starter/hello-world.html
 */
 
