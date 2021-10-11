@@ -27,6 +27,8 @@ Once the configuration are completed, please follow this steps
 ## Steps to start the application
 1. Stat the terminal at VSC
 2. Go to this website and do the intial setup for Git/Github https://adamtheautomator.com/visual-studio-code-github-setup/
-3. Pull the applicaiton repository from the applicaiton Github, put this command into the terminal (
-4. 
+3. Pull the applicaiton repository from the applicaiton Github, put this command into the terminal **pull https://github.com/dhruvkmodi/ABB_JSONApplication.git**
+4. Check if node is installed by the command **node -v**
+5. To start the application put this command **node index.js**
+6. The application should be running on https://localhost:5000
 
