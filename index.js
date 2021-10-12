@@ -185,7 +185,7 @@ var Output1 = jmespath.search(ParseJSON,
 `
 )
 console.log(Output1); //outputting the update JSON file
-fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output1, null, 2)); //storing the the JSON file to OutputJSON folder
+fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output1, null, 2)); //storing/writing to assetlist.json which is located in the OutputJSON folder
 
 var ReadJSON2 = fs.readFileSync('./OutputJSON/assetlist.json'); //reading from the data.json and storing in a variable
 var ParseJSON2 = JSON.parse(ReadJSON2); //coverting the json to javascript object
@@ -273,7 +273,7 @@ var Output2 = jmespath.search(ParseJSON2,
 `
 )
 console.log(Output2); //outputting the update JSON file
-fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output2, null, 2)); //storing the the JSON file to OutputJSON folder
+fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output2, null, 2)); //storing/writing the assetlist.json which is located in the OutputJSON folder
 }
 
 
