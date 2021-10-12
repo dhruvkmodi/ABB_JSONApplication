@@ -32,7 +32,7 @@ Once the configuration are completed, please follow this steps
 5. To start the application put this command **node index.js**
 6. The application should be running on http://localhost:5000/, the VSC terminal is also showing this
 
-### Please reload the Application when working with more than 
+### Please reload the Application when working with more than one file
 
 
 
