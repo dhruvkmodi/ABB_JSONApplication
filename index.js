@@ -272,9 +272,8 @@ var Output2 = jmespath.search(ParseJSON2,
 }
 `
 )
-console.log(Output2); 
-fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output2, null, 2));
-
+console.log(Output2); //outputting the update JSON file
+fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output2, null, 2)); //storing the the JSON file to OutputJSON folder
 }
 
 
