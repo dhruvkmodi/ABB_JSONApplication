@@ -44,7 +44,7 @@ server.post('/', (req, res) =>
         setTimeout(() => //There will be a 5 second delay before the code inside the arrow function are executed
         {
             res.send("File Uploaded"); //File uploaded reponse will be sent by the application
-            UpdateJSON(); //calling the funciton update to update the JSON file this include storing the updated the JSON file
+            UpdateJSON(); //calling the function update to update the JSON file this include storing the updated the JSON file
         }, 5000); //1000 ms = 1 s
     }
     })
