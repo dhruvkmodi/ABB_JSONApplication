@@ -1,51 +1,57 @@
-const fs = require('fs');
+/* adding the required modules*/
+const fs = require('fs'); 
 const jmespath = require('jmespath');
 const express = require('express');
 const upload = require('express-fileupload');
 const path = require('path');
 
-const server = express();
-server.use(upload());
+const server = express(); //creating a new express application
+server.use(upload()); //this is the middleware connected to express file upload
 
+/* Get request is made to the server at the root path, and the application is responding by loading the index.html */ 
 server.get('/', (req, res) =>
 {
     res.sendFile(__dirname + '/index.html');
 })
 
+/* Application starts the server at port 5000 */
 server.listen(5000, () => 
 {
     console.log("Application is running at http://localhost:5000/");
 })
 
+/* Post request connected to the file upload and file selecting */
 server.post('/', (req, res) => 
 {
-    if(req.files)
+    if(req.files) //we will chekc if the request.file is initialized or not
     {    
-    console.log(req.files);
-    var file = req.files.fileName;
-    var filename = file.name;
-    filename = 'data.json';
-    console.log(filename);
+    console.log(req.files); //we are outputting to the terminal information that is created when the file is uploaded
+    var file = req.files.fileName; //file object will acquired, the "filename" part is connected to the index.html line 35, please look at the name part to the right
+    var filename = file.name; //file name will be extracted
+    filename = 'data.json'; //file name is changed, files with a different name will also have this name when they are stored in the "InputJSON" folder
+    console.log(filename); //we are outputting the filename at terminal, which should be data.json
     
+    //We are moving the file to upload folder which for this application is "InputJSON"
     file.mv('./InputJSON/' + filename, function (err)
     {
-    if (err)
+    if (err) //errors
     {
        res.send(err); 
     }
-    else 
+    else //no errors
     {
-        OutputJSONClear();        
-        setTimeout(() => 
+        OutputJSONClear(); //calling the function that will clear the output folder before the new upload        
+        setTimeout(() => //There will be a 5 second delay before the code inside the arrow function are executed
         {
-            res.send("File Uploaded");
-            UpdateJSON();   
-        }, 5000);
+            res.send("File Uploaded"); //File uploaded reponse will be sent by the application
+            UpdateJSON(); //calling the funciton update to update the JSON file this include storing the updated the JSON file
+        }, 5000); //1000 ms = 1 s
     }
     })
     }
 })
 
+//Function to clear the input folder "InputJSON"
 function InputJSONClear()
 {
     const directory = 'InputJSON';
@@ -64,6 +70,7 @@ function InputJSONClear()
     });
 }
 
+//Function to clear output folder "OutputJSON"
 function OutputJSONClear()
 {
     const directory = "OutputJSON";
@@ -82,18 +89,21 @@ function OutputJSONClear()
     });
 }
 
+//Get request connected to the download button and downloading the the output/update JSON file
 server.get('/download', function(req, res) 
 {
     const downloadfile = `${__dirname}/OutputJSON/assetlist.json`;
     res.download(downloadfile);
 })
 
+//Updating the JSON File
 function UpdateJSON()
 {
-var ReadJSON = fs.readFileSync('./InputJSON/data.json');
-var ParseJSON = JSON.parse(ReadJSON);
+var ReadJSON = fs.readFileSync('./InputJSON/data.json'); //reading from the data.json and storing in a variable
+var ParseJSON = JSON.parse(ReadJSON); //coverting the json to javascript object
 
-var Output1 = jmespath.search(ParseJSON, 
+//Updating the JSON File with the jmespath query language sorting the measurment by MeasurementTypeID
+var Output1 = jmespath.search(ParseJSON,
     `[].
 {
     AssetID: AssetID,
@@ -174,12 +184,13 @@ var Output1 = jmespath.search(ParseJSON,
 }
 `
 )
-console.log(Output1);
-fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output1, null, 2));
+console.log(Output1); //outputting the update JSON file
+fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output1, null, 2)); //storing the the JSON file to OutputJSON folder
 
-var ReadJSON2 = fs.readFileSync('./OutputJSON/assetlist.json');
-var ParseJSON2 = JSON.parse(ReadJSON2);
+var ReadJSON2 = fs.readFileSync('./OutputJSON/assetlist.json'); //reading from the data.json and storing in a variable
+var ParseJSON2 = JSON.parse(ReadJSON2); //coverting the json to javascript object
 
+//Updating the JSON File with the jmespath query language, this one is selecting specific MeasurementTypeCode
 var Output2 = jmespath.search(ParseJSON2, 
     `[].
 {
@@ -261,13 +272,10 @@ var Output2 = jmespath.search(ParseJSON2,
 }
 `
 )
-console.log(Output2);
+console.log(Output2); 
 fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output2, null, 2));
 
 }
-
-
-
 
 
 /*
@@ -325,5 +333,7 @@ https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-f
 https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 https://stackoverflow.com/questions/1947263/using-an-html-button-to-call-a-javascript-function
 https://expressjs.com/en/starter/hello-world.html
+https://www.coursereport.com/blog/what-is-express
+https://www.sohamkamani.com/blog/2018/05/30/understanding-how-expressjs-works/
 */
 
