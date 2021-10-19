@@ -352,4 +352,7 @@ https://ourcodeworld.com/articles/read/1186/how-to-write-a-file-in-node-js-using
 https://www.geeksforgeeks.org/node-js-trim-function/
 https://www.techonthenet.com/js/string_trim.php#:~:text=In%20JavaScript%2C%20trim()%20is,instance%20of%20the%20String%20class.
 https://www.w3schools.com/jsref/jsref_trim_string.asp
+https://www.computerhope.com/jargon/c/char.htm#:~:text=The%20abbreviation%20char%20is%20used,of%20data.
+https://www.includehelp.com/dictionary/char-full-form.aspx
+https://www.w3schools.com/jsref/jsref_charat.asp
 */
