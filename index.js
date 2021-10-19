@@ -1,109 +1,106 @@
 /* adding the required modules*/
-const fs = require('fs'); 
-const jmespath = require('jmespath');
-const express = require('express');
-const upload = require('express-fileupload');
-const path = require('path');
+const fs = require("fs");
+const jmespath = require("jmespath");
+const express = require("express");
+const upload = require("express-fileupload");
+const path = require("path");
 
 const server = express(); //creating a new express application
 server.use(upload()); //this is the middleware connected to express file upload
 
-/* Get request is made to the server at the root path, and the application is responding by loading the index.html */ 
-server.get('/', (req, res) =>
-{
-    res.sendFile(__dirname + '/index.html');
-})
+/* Get request is made to the server at the root path, and the application is responding by loading the index.html */
+server.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 /* Application starts the server at port 5000 */
-server.listen(5000, () => 
-{
-    console.log("Application is running at http://localhost:5000/");
-})
+server.listen(5000, () => {
+  console.log("Application is running at http://localhost:5000/");
+});
 
 /* Post request connected to the file upload and file selecting */
-server.post('/', (req, res) => 
-{
-    if(req.files) //we will chekc if the request.file is initialized or not
-    {    
+server.post("/", (req, res) => {
+  if (req.files) {
+    //we will check if the request.file is initialized or not
     console.log(req.files); //we are outputting to the terminal information that is created when the file is uploaded
     var file = req.files.fileName; //file object will acquired, the "filename" part is connected to the index.html line 35, please look at the name part to the right
     var filename = file.name; //file name will be extracted
-    filename = 'data.json'; //file name is changed, files with a different name will also have this name when they are stored in the "InputJSON" folder
+    filename = "data.json"; //file name is changed, files with a different name will also have this name when they are stored in the "InputJSON" folder
     console.log(filename); //we are outputting the filename at terminal, which should be data.json
-    
+
     //We are moving the file to upload folder which for this application is "InputJSON"
-    file.mv('./InputJSON/' + filename, function (err)
-    {
-    if (err) //errors
-    {
-       res.send(err); 
-    }
-    else //no errors
-    {
-        OutputJSONClear(); //calling the function that will clear the output folder before the new upload        
-        setTimeout(() => //There will be a 5 second delay before the code inside the arrow function are executed
-        {
-            res.send("File Uploaded"); //File uploaded reponse will be sent by the application
-            UpdateJSON(); //calling the function update to update the JSON file this include storing the updated the JSON file
+    file.mv("./InputJSON/" + filename, function (err) {
+      if (err) {
+        //errors
+        res.send(err);
+      } //no errors
+      else {
+        OutputJSONClear(); //calling the function that will clear the output folder before the new upload
+        //There will be a 5 second delay before the code inside the arrow function are executed
+        setTimeout(() => {
+          res.send("File Uploaded"); //File uploaded reponse will be sent by the application
+          JSONFormat(); //calling the function to solve the parse error connect to UTF-8 with BOM
+          UpdateJSON(); //calling the function update to update the JSON file this include storing the updated the JSON file
         }, 5000); //1000 ms = 1 s
-    }
-    })
-    }
-})
+      }
+    });
+  }
+});
+
+/*the orignal file has the encoding of "UTF-8 with BOM" which is not allowed by the JSON parsers this is why we are updating that data.json with this function and converting from
+ "UTF-8 with BOM" to UTF8*/
+function JSONFormat() {
+  var formatted = {}; //created a javascript object
+  var jsonformat = fs.readFileSync("./InputJSON/data.json", "utf8"); //reading the file and coverting the encoding to utf8 so the file can be parsed
+  jsonformat = jsonformat.trim(); //trimming
+  formatted = JSON.parse(jsonformat); //coverting json to javascript object and storing the empty javascript object created in the starting
+  fs.writeFileSync("./InputJSON/data.json", JSON.stringify(formatted, null, 2)); //writing to the same file with the updated and also coverted from javascript object back to json
+}
 
 //Function to clear the input folder "InputJSON"
-function InputJSONClear()
-{
-    const directory = 'InputJSON';
+function InputJSONClear() {
+  const directory = "InputJSON";
 
-    fs.readdir(directory, (err, files) =>
-    {
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), (err) => {
         if (err) throw err;
-
-        for (const file of files)
-        {
-            fs.unlink(path.join(directory, file), err =>
-            {
-                if (err) throw err;
-            });
-        }
-    });
+      });
+    }
+  });
 }
 
 //Function to clear output folder "OutputJSON"
-function OutputJSONClear()
-{
-    const directory = "OutputJSON";
-    
-    fs.readdir(directory, (err, files) => 
-    {
-        if (err) throw err;
+function OutputJSONClear() {
+  const directory = "OutputJSON";
 
-        for (const file of files)
-        {
-            fs.unlink(path.join(directory, file), err => 
-            {
-                if (err) throw err;
-            });
-        }
-    });
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), (err) => {
+        if (err) throw err;
+      });
+    }
+  });
 }
 
 //Get request connected to the download button and downloading the the output/update JSON file
-server.get('/download', function(req, res) 
-{
-    const downloadfile = `${__dirname}/OutputJSON/assetlist.json`;
-    res.download(downloadfile);
-})
+server.get("/download", function (req, res) {
+  const downloadfile = `${__dirname}/OutputJSON/assetlist.json`;
+  res.download(downloadfile);
+});
 
 //Updating the JSON File
-function UpdateJSON()
-{
-var ReadJSON = fs.readFileSync('./InputJSON/data.json'); //reading from the data.json and storing in a variable
-var ParseJSON = JSON.parse(ReadJSON); //coverting the json to javascript object
+function UpdateJSON() {
+  var ReadJSON = fs.readFileSync("./InputJSON/data.json"); //reading from the data.json and storing in a variable
+  var ParseJSON = JSON.parse(ReadJSON); //coverting the json to javascript object
 
-//Updating the JSON File with the jmespath query language sorting the measurment by MeasurementTypeID
-var Output1 = jmespath.search(ParseJSON,
+  //Updating the JSON File with the jmespath query language sorting the measurment by MeasurementTypeID
+  var Output1 = jmespath.search(
+    ParseJSON,
     `[].
 {
     AssetID: AssetID,
@@ -183,15 +180,19 @@ var Output1 = jmespath.search(ParseJSON,
     }
 }
 `
-)
-console.log(Output1); //outputting the update JSON file
-fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output1, null, 2)); //storing/writing to assetlist.json which is located in the OutputJSON folder
+  );
+  console.log(Output1); //outputting the update JSON file
+  fs.writeFileSync(
+    "./OutputJSON/assetlist.json",
+    JSON.stringify(Output1, null, 2)
+  ); //storing/writing to assetlist.json which is located in the OutputJSON folder
 
-var ReadJSON2 = fs.readFileSync('./OutputJSON/assetlist.json'); //reading from the data.json and storing in a variable
-var ParseJSON2 = JSON.parse(ReadJSON2); //coverting the json to javascript object
+  var ReadJSON2 = fs.readFileSync("./OutputJSON/assetlist.json"); //reading from the data.json and storing in a variable
+  var ParseJSON2 = JSON.parse(ReadJSON2); //coverting the json to javascript object
 
-//Updating the JSON File with the jmespath query language, this one is selecting specific MeasurementTypeCode
-var Output2 = jmespath.search(ParseJSON2, 
+  //Updating the JSON File with the jmespath query language, this one is selecting specific MeasurementTypeCode
+  var Output2 = jmespath.search(
+    ParseJSON2,
     `[].
 {
     AssetID: AssetID,
@@ -271,11 +272,13 @@ var Output2 = jmespath.search(ParseJSON2,
     }
 }
 `
-)
-console.log(Output2); //outputting the update JSON file
-fs.writeFileSync('./OutputJSON/assetlist.json', JSON.stringify(Output2, null, 2)); //storing/writing the assetlist.json which is located in the OutputJSON folder
+  );
+  console.log(Output2); //outputting the update JSON file
+  fs.writeFileSync(
+    "./OutputJSON/assetlist.json",
+    JSON.stringify(Output2, null, 2)
+  ); //storing/writing the assetlist.json which is located in the OutputJSON folder
 }
-
 
 /*
 Reference:
@@ -334,5 +337,15 @@ https://stackoverflow.com/questions/1947263/using-an-html-button-to-call-a-javas
 https://expressjs.com/en/starter/hello-world.html
 https://www.coursereport.com/blog/what-is-express
 https://www.sohamkamani.com/blog/2018/05/30/understanding-how-expressjs-works/
+https://www.youtube.com/watch?v=zd_aDbwr4pY&ab_channel=StudyZone
+https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode/29988116
+https://prettier.io/docs/en/api.html
+https://stackoverflow.com/questions/11293857/fastest-way-to-copy-a-file-in-node-js
+https://stackoverflow.com/questions/2496710/writing-files-in-node-js
+https://stackoverflow.com/questions/34156282/how-do-i-save-json-to-local-text-file
+https://stackoverflow.com/questions/44176194/json-parse-causes-error-syntaxerror-unexpected-token-in-json-at-position-0/44177102
+https://stackoverflow.com/questions/51150956/how-to-fix-this-error-typeerror-err-invalid-callback-callback-must-be-a-funct/51151244
+https://github.com/nodejs/node-v0.x-archive/issues/1918
+https://stackoverflow.com/questions/4990095/json-specification-and-usage-of-bom-charset-encoding/38036753#38036753
+https://stackoverflow.com/questions/56393110/make-node-rest-client-expect-utf-8-json-content-to-avoid-bom-parsing-error
 */
-
