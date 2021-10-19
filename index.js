@@ -52,7 +52,7 @@ server.post("/", (req, res) => {
 function JSONFormat() {
   var formatted = {}; //created a javascript object
   var jsonformat = fs.readFileSync("./InputJSON/data.json", "utf8"); //reading the file and coverting the encoding to utf8 so the file can be parsed
-  jsonformat = jsonformat.trim(); //trimming
+  jsonformat = jsonformat.trim(); //trimming the whitespaces from the data.json, also trim will filter out character that are not need or chars that could cause error
   formatted = JSON.parse(jsonformat); //coverting json to javascript object and storing the empty javascript object created in the starting
   fs.writeFileSync("./InputJSON/data.json", JSON.stringify(formatted, null, 2)); //writing to the same file with the updated and also coverted from javascript object back to json
 }
@@ -348,4 +348,8 @@ https://stackoverflow.com/questions/51150956/how-to-fix-this-error-typeerror-err
 https://github.com/nodejs/node-v0.x-archive/issues/1918
 https://stackoverflow.com/questions/4990095/json-specification-and-usage-of-bom-charset-encoding/38036753#38036753
 https://stackoverflow.com/questions/56393110/make-node-rest-client-expect-utf-8-json-content-to-avoid-bom-parsing-error
+https://ourcodeworld.com/articles/read/1186/how-to-write-a-file-in-node-js-using-the-utf-8-encoding-with-bom
+https://www.geeksforgeeks.org/node-js-trim-function/
+https://www.techonthenet.com/js/string_trim.php#:~:text=In%20JavaScript%2C%20trim()%20is,instance%20of%20the%20String%20class.
+https://www.w3schools.com/jsref/jsref_trim_string.asp
 */
