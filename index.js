@@ -118,10 +118,10 @@ function UpdateJSON() {
     IsFavorite: IsFavorite,
     FirmwareUpdate:
     {
-        UpdateAvailable: UpdateAvailable,
-        UpdateFirmwareID: UpdateFirmwareID,
-        UpdateFirmwareVersion:  UpdateFirmwareVersion,
-        UpdateFirmwareProperties: UpdateFirmwareProperties
+        UpdateAvailable: FirmwareUpdate.UpdateAvailable,
+        UpdateFirmwareID: FirmwareUpdate.UpdateFirmwareID,
+        UpdateFirmwareVersion:  FirmwareUpdate.UpdateFirmwareVersion,
+        UpdateFirmwareProperties: FirmwareUpdate.UpdateFirmwareProperties
     },
     BatteryLevel: BatteryLevel,
     HealthStatus: HealthStatus,
@@ -131,42 +131,42 @@ function UpdateJSON() {
     Measurements : sort_by(Measurements, &MeasurementTypeID)[],
     Sensor:
     {
-        SensorIdentifier: SensorIdentifier,
+        SensorIdentifier: Sensor.SensorIdentifier,
         Hardware:
         {
-           HardwareRevisionID: HardwareRevisionID,
-           HardwareRevisionName: HardwareRevisionName,
-           HardwareVarianceID: HardwareVarianceID,
-           HardwareVarianceName: HardwareVarianceName
+           HardwareRevisionID: Sensor.Hardware.HardwareRevisionID,
+           HardwareRevisionName: Sensor.Hardware.HardwareRevisionName,
+           HardwareVarianceID: Sensor.Hardware.HardwareVarianceID,
+           HardwareVarianceName: Sensor.Hardware.HardwareVarianceName
         },  
-        FirmwareVersion: FirmwareVersion,
-        CommissioningDate: CommissioningDate,
-        Properties: Properties[],
+        FirmwareVersion: Sensor.FirmwareVersion,
+        CommissioningDate: Sensor.CommissioningDate,
+        Properties: Sensor.Properties[],
         Subscription:
         {
-            IsBasicSubscription: IsBasicSubscription,
-            IsTrialSubscription: IsTrialSubscription,
-            StartDate: StartDate,
-            EndDate: EndDate,
+            IsBasicSubscription: Sensor.Subscription.IsBasicSubscription,
+            IsTrialSubscription: Sensor.Subscription.IsTrialSubscription,
+            StartDate: Sensor.Subscription.StartDate,
+            EndDate: Sensor.Subscription.EndDate,
             SubscriptionLevel:
             {
-               Description: Description,
-               Id: Id,
-               Name: Name
+               Description: Sensor.Subscription.SubscriptionLevel.Description,
+               Id: Sensor.Subscription.SubscriptionLevel.Id,
+               Name: Sensor.Subscription.SubscriptionLevel.Name
             },
-            HasAvailableSubscriptions: HasAvailableSubscriptions,
-            IsExpiring: IsExpiring
+            HasAvailableSubscriptions: Sensor.Subscription.HasAvailableSubscriptions,
+            IsExpiring: Sensor.Subscription.IsExpiring
         },
-        Features: Features[]
-        IsPowerSavingEnabled: IsPowerSavingEnabled,
-        OperatingMode:  OperatingMode    
+        Features: Sensor.Features[]
+        IsPowerSavingEnabled: Sensor.IsPowerSavingEnabled,
+        OperatingMode:  Sensor.OperatingMode    
     },
     LocationLatitude: LocationLatitude,
     LocationLongitude: LocationLongitude,
     CreatedOn: CreatedOn,
     LastUpdatedOn: LastUpdatedOn,
     OrganizationID: OrganizationID,
-    ConfigurationProfiles:[],
+    ConfigurationProfiles: ConfigurationProfiles[],
     AssetResponsibleID: AssetResponsibleID,
     AssetResponsibleName: AssetResponsibleName,
     IsMonitored: IsMonitored,
@@ -175,8 +175,8 @@ function UpdateJSON() {
     FirmwareVersion: FirmwareVersion
     SensorTypeKey:
     {
-        SensorType: SensorType,
-        AssetType: AssetType
+        SensorType: SensorTypeKey.SensorType,
+        AssetType: SensorTypeKey.AssetType
     }
 }
 `
@@ -210,10 +210,10 @@ function UpdateJSON() {
     IsFavorite: IsFavorite,
     FirmwareUpdate:
     {
-        UpdateAvailable: UpdateAvailable,
-        UpdateFirmwareID: UpdateFirmwareID,
-        UpdateFirmwareVersion:  UpdateFirmwareVersion,
-        UpdateFirmwareProperties: UpdateFirmwareProperties
+        UpdateAvailable: FirmwareUpdate.UpdateAvailable,
+        UpdateFirmwareID: FirmwareUpdate.UpdateFirmwareID,
+        UpdateFirmwareVersion:  FirmwareUpdate.UpdateFirmwareVersion,
+        UpdateFirmwareProperties: FirmwareUpdate.UpdateFirmwareProperties
     },
     BatteryLevel: BatteryLevel,
     HealthStatus: HealthStatus,
@@ -223,42 +223,42 @@ function UpdateJSON() {
     Measurements : Measurements[?contains(['Speed', 'SkinTemp', 'OverallVibration', 'LineFrequency', 'BearingCondition', 'Acc_z' , 'Acc_y', 'Acc_x', 'EnergyConsumption', 'MotorStartStopCount', 'PeakToPeak_X_Motor', 'PeakToPeak_Y_Motor', 'PeakToPeak_Z_Motor', 'Bearing_x_Motor', 'Bearing_y_Motor', 'Bearing_z_Motor', 'Motor_TotalRunningTime'], MeasurementTypeCode)],
     Sensor:
     {
-        SensorIdentifier: SensorIdentifier,
+        SensorIdentifier: Sensor.SensorIdentifier,
         Hardware:
         {
-           HardwareRevisionID: HardwareRevisionID,
-           HardwareRevisionName: HardwareRevisionName,
-           HardwareVarianceID: HardwareVarianceID,
-           HardwareVarianceName: HardwareVarianceName
+           HardwareRevisionID: Sensor.Hardware.HardwareRevisionID,
+           HardwareRevisionName: Sensor.Hardware.HardwareRevisionName,
+           HardwareVarianceID: Sensor.Hardware.HardwareVarianceID,
+           HardwareVarianceName: Sensor.Hardware.HardwareVarianceName
         },  
-        FirmwareVersion: FirmwareVersion,
-        CommissioningDate: CommissioningDate,
-        Properties: Properties[],
+        FirmwareVersion: Sensor.FirmwareVersion,
+        CommissioningDate: Sensor.CommissioningDate,
+        Properties: Sensor.Properties[],
         Subscription:
         {
-            IsBasicSubscription: IsBasicSubscription,
-            IsTrialSubscription: IsTrialSubscription,
-            StartDate: StartDate,
-            EndDate: EndDate,
+            IsBasicSubscription: Sensor.Subscription.IsBasicSubscription,
+            IsTrialSubscription: Sensor.Subscription.IsTrialSubscription,
+            StartDate: Sensor.Subscription.StartDate,
+            EndDate: Sensor.Subscription.EndDate,
             SubscriptionLevel:
             {
-               Description: Description,
-               Id: Id,
-               Name: Name
+               Description: Sensor.Subscription.SubscriptionLevel.Description,
+               Id: Sensor.Subscription.SubscriptionLevel.Id,
+               Name: Sensor.Subscription.SubscriptionLevel.Name
             },
-            HasAvailableSubscriptions: HasAvailableSubscriptions,
-            IsExpiring: IsExpiring
+            HasAvailableSubscriptions: Sensor.Subscription.HasAvailableSubscriptions,
+            IsExpiring: Sensor.Subscription.IsExpiring
         },
-        Features: Features[]
-        IsPowerSavingEnabled: IsPowerSavingEnabled,
-        OperatingMode:  OperatingMode    
+        Features: Sensor.Features[]
+        IsPowerSavingEnabled: Sensor.IsPowerSavingEnabled,
+        OperatingMode:  Sensor.OperatingMode    
     },
     LocationLatitude: LocationLatitude,
     LocationLongitude: LocationLongitude,
     CreatedOn: CreatedOn,
     LastUpdatedOn: LastUpdatedOn,
     OrganizationID: OrganizationID,
-    ConfigurationProfiles:[],
+    ConfigurationProfiles: ConfigurationProfiles[],
     AssetResponsibleID: AssetResponsibleID,
     AssetResponsibleName: AssetResponsibleName,
     IsMonitored: IsMonitored,
@@ -267,8 +267,8 @@ function UpdateJSON() {
     FirmwareVersion: FirmwareVersion
     SensorTypeKey:
     {
-        SensorType: SensorType,
-        AssetType: AssetType
+        SensorType:  SensorTypeKey.SensorType,
+        AssetType: SensorTypeKey.AssetType
     }
 }
 `
@@ -355,4 +355,5 @@ https://www.w3schools.com/jsref/jsref_trim_string.asp
 https://www.computerhope.com/jargon/c/char.htm#:~:text=The%20abbreviation%20char%20is%20used,of%20data.
 https://www.includehelp.com/dictionary/char-full-form.aspx
 https://www.w3schools.com/jsref/jsref_charat.asp
+https://jsonformatter.org/
 */
