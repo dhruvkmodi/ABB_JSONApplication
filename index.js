@@ -102,7 +102,7 @@ function UpdateJSON() {
   var Output1 = jmespath.search(
     ParseJSON,
     `[].
-{
+  {
     AssetID: AssetID,
     UniqueID: UniqueID,
     DeviceID: DeviceID,
@@ -115,6 +115,7 @@ function UpdateJSON() {
     AssetType: AssetType,
     SensorType: SensorType,
     AssetTypeName: AssetTypeName,
+    IsGroup: IsGroup,
     IsFavorite: IsFavorite,
     FirmwareUpdate:
     {
@@ -123,8 +124,10 @@ function UpdateJSON() {
         UpdateFirmwareVersion:  FirmwareUpdate.UpdateFirmwareVersion,
         UpdateFirmwareProperties: FirmwareUpdate.UpdateFirmwareProperties
     },
+    AssetPictures: AssetPictures[],
     BatteryLevel: BatteryLevel,
     HealthStatus: HealthStatus,
+    Labels: Labels[],
     LastSyncTimeStamp: LastSyncTimeStamp,
     LastMeasurementTimeStamp: LastMeasurementTimeStamp,
     AssetProperties: AssetProperties[],
@@ -169,8 +172,15 @@ function UpdateJSON() {
     ConfigurationProfiles: ConfigurationProfiles[],
     AssetResponsibleID: AssetResponsibleID,
     AssetResponsibleName: AssetResponsibleName,
+    Condition                : Condition,
     IsMonitored: IsMonitored,
+    PlantUniqueID: PlantUniqueID,
+    AssetImageSource: AssetImageSource,
+    NameplateImageSource: NameplateImageSource,
+    SensorRange: SensorRange,
+    MeasurementStatus: MeasurementStatus,
     AuthenticationPassKey: AuthenticationPassKey,
+    IsCommunicating: IsCommunicating,
     AuthenticationID: AuthenticationID,
     FirmwareVersion: FirmwareVersion
     SensorTypeKey:
@@ -178,8 +188,9 @@ function UpdateJSON() {
         SensorType: SensorTypeKey.SensorType,
         AssetType: SensorTypeKey.AssetType
     }
-}
-`
+    OverallConditionStatus: OverallConditionStatus
+  }
+    `
   );
   console.log(Output1); //outputting the update JSON file
   fs.writeFileSync(
@@ -207,6 +218,7 @@ function UpdateJSON() {
     AssetType: AssetType,
     SensorType: SensorType,
     AssetTypeName: AssetTypeName,
+    IsGroup : IsGroup,
     IsFavorite: IsFavorite,
     FirmwareUpdate:
     {
@@ -215,8 +227,10 @@ function UpdateJSON() {
         UpdateFirmwareVersion:  FirmwareUpdate.UpdateFirmwareVersion,
         UpdateFirmwareProperties: FirmwareUpdate.UpdateFirmwareProperties
     },
+    AssetPictures: AssetPictures[],
     BatteryLevel: BatteryLevel,
     HealthStatus: HealthStatus,
+    Labels: Labels[],
     LastSyncTimeStamp: LastSyncTimeStamp,
     LastMeasurementTimeStamp: LastMeasurementTimeStamp,
     AssetProperties: AssetProperties[],
@@ -261,15 +275,23 @@ function UpdateJSON() {
     ConfigurationProfiles: ConfigurationProfiles[],
     AssetResponsibleID: AssetResponsibleID,
     AssetResponsibleName: AssetResponsibleName,
+    Condition: Condition[],
     IsMonitored: IsMonitored,
+    PlantUniqueID: PlantUniqueID,
+    AssetImageSource: AssetImageSource,
+    NameplateImageSource: NameplateImageSource,
+    SensorRange: SensorRange,
+    MeasurementStatus: MeasurementStatus,
     AuthenticationPassKey: AuthenticationPassKey,
+    IsCommunicating: IsCommunicating,
     AuthenticationID: AuthenticationID,
-    FirmwareVersion: FirmwareVersion
+    FirmwareVersion: FirmwareVersion,
     SensorTypeKey:
     {
         SensorType:  SensorTypeKey.SensorType,
         AssetType: SensorTypeKey.AssetType
-    }
+    },
+    OverallConditionStatus: OverallConditionStatus
 }
 `
   );
