@@ -172,7 +172,7 @@ function UpdateJSON() {
     ConfigurationProfiles: ConfigurationProfiles[],
     AssetResponsibleID: AssetResponsibleID,
     AssetResponsibleName: AssetResponsibleName,
-    Condition                : Condition,
+    Condition: Condition[],
     IsMonitored: IsMonitored,
     PlantUniqueID: PlantUniqueID,
     AssetImageSource: AssetImageSource,
