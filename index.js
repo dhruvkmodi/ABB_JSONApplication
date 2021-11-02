@@ -298,7 +298,7 @@ function UpdateJSON() {
   console.log(Output2); //outputting the update JSON file
   fs.writeFileSync(
     "./OutputJSON/assetlist.json",
-    JSON.stringify(Output2, null, 2)
+    "\ufeff" + JSON.stringify(Output2, null, 2)
   ); //storing/writing the assetlist.json which is located in the OutputJSON folder
 }
 
